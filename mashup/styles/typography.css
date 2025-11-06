@@ -1,0 +1,200 @@
+/**
+ * Typography System - Hebrew-Optimized
+ * Font scale and text styles for RTL content
+ */
+
+/* Hebrew Font Stack */
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans Hebrew',
+    sans-serif;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-block-end: var(--space-md);
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: 2.5rem;      /* 40px */
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2rem;        /* 32px */
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;      /* 24px */
+}
+
+h4 {
+  font-size: 1.25rem;     /* 20px */
+}
+
+h5 {
+  font-size: 1.125rem;    /* 18px */
+}
+
+h6 {
+  font-size: 1rem;        /* 16px */
+}
+
+/* Body Text */
+p {
+  margin-block-end: var(--space-md);
+  line-height: 1.6;
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Lists */
+ul, ol {
+  padding-inline-start: var(--space-xl);
+  margin-block-end: var(--space-md);
+}
+
+li {
+  margin-block-end: var(--space-sm);
+}
+
+/* Code */
+code, pre {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--color-hover);
+  border-radius: var(--radius-sm);
+}
+
+code {
+  padding-inline: var(--space-xs);
+  padding-block: 2px;
+  font-size: 0.875em;
+}
+
+pre {
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin-block-end: var(--space-md);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+}
+
+/* Text Utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.text-small {
+  font-size: 0.875rem;  /* 14px */
+}
+
+.text-large {
+  font-size: 1.125rem;  /* 18px */
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.text-semibold {
+  font-weight: 600;
+}
+
+.text-medium {
+  font-weight: 500;
+}
+
+.text-normal {
+  font-weight: 400;
+}
+
+/* Text Colors */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-success {
+  color: var(--color-accent);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+/* Tabular Numbers (for KPIs) */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Uppercase Text */
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Truncate Text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Line Clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

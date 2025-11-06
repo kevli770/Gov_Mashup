@@ -1,0 +1,228 @@
+/**
+ * Responsive Styles - Mobile-First Breakpoints
+ * Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+ */
+
+/* Base (Mobile) - 320px and up */
+/* All styles in main.css are mobile-first by default */
+
+/* Small screens (sm) - 640px and up */
+@media (min-width: 640px) {
+  .dashboard-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .kpi-section {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .kpi-value {
+    font-size: 2.75rem;
+  }
+}
+
+/* Medium screens (md) - 768px and up */
+@media (min-width: 768px) {
+  .dashboard-header {
+    padding-inline: var(--space-2xl);
+  }
+
+  .dashboard-main {
+    padding: var(--space-2xl);
+  }
+
+  .kpi-section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chart-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi-value {
+    font-size: 3rem;
+  }
+
+  .kpi-card {
+    padding: var(--space-2xl);
+  }
+}
+
+/* Large screens (lg) - 1024px and up */
+@media (min-width: 1024px) {
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .kpi-value {
+    font-size: 3.5rem;
+  }
+
+  .chart-title {
+    font-size: 1.5rem;
+  }
+
+  .chart {
+    min-height: 24rem;
+  }
+}
+
+/* Extra large screens (xl) - 1280px and up */
+@media (min-width: 1280px) {
+  .dashboard-main {
+    padding: var(--space-3xl);
+  }
+
+  .kpi-section {
+    gap: var(--space-xl);
+  }
+
+  .charts-section {
+    gap: var(--space-2xl);
+  }
+}
+
+/* 2XL screens (2xl) - 1536px and up */
+@media (min-width: 1536px) {
+  .kpi-value {
+    font-size: 4rem;
+  }
+
+  .chart {
+    min-height: 28rem;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 639px) {
+  .dashboard-header {
+    flex-direction: column;
+    height: auto;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .refresh-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kpi-section {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .kpi-card {
+    padding: var(--space-lg);
+    min-height: 8rem;
+  }
+
+  .kpi-value {
+    font-size: 2rem;
+  }
+
+  .kpi-percentage {
+    font-size: 1.25rem;
+  }
+
+  .kpi-brand {
+    font-size: 1.5rem;
+  }
+
+  .chart-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .chart-container {
+    padding: var(--space-lg);
+  }
+
+  .chart {
+    min-height: 16rem;
+  }
+
+  .chart-title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Tablet portrait adjustments */
+@media (min-width: 640px) and (max-width: 767px) {
+  .kpi-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Print styles */
+@media print {
+  .dashboard-header,
+  .refresh-button,
+  .dashboard-footer {
+    display: none;
+  }
+
+  .dashboard-main {
+    padding: 0;
+  }
+
+  .kpi-card,
+  .chart-container {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  .kpi-card,
+  .chart-container {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .refresh-icon {
+    transition: none;
+  }
+
+  .refresh-button:hover .refresh-icon {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: oklch(0.50 0.02 264);
+  }
+
+  .kpi-card,
+  .chart-container {
+    border-width: 2px;
+  }
+
+  .refresh-button {
+    border: 2px solid var(--color-primary-dark);
+  }
+}

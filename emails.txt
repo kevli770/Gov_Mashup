@@ -1,0 +1,517 @@
+הי קווין,
+
+מה שלומך?
+
+ 
+
+אתה פנוי היום מאוחר יותר או מחר מתישהו לשבת יחד כדי להראות לי מאיזה כלי AI אני מתחיל ואיך אני מבקש ממנו להוריד את המידע באופן יומ-יומי?
+
+ 
+
+תודה רבה!
+
+ערן
+
+ 
+
+ 
+
+Eran Morlevy 🎗️        
+Sales Planning Manager
+
+Product & Sales Division, Union Motors LTD   
+T:    972-77-3339026 
+
+M:   972-52-8406535 
+
+[../../../../../batheny/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/AppData/Local/Microsoft/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/P2WMGEK5/www.toyota.co.il]www.toyota.co.il
+
+ 
+
+ 
+
+מאת: Eran Morlevy
+נשלח: יום א 27 יולי 2025 09:40
+אל: Kevin Liaks (Union Motors)‏ <Kevin.Liaks@uml.co.il>; Itai Hayoun Levin‏ <Itai.Hayoun@toyota.co.il>; Tommy Amir (Union Motors)‏ <Tommy.Amir@uml.co.il>
+נושא: RE: מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+
+ 
+
+בוקר טוב,
+
+ראיתי שפגישת  BI Report meeting – Biweekly בוטלה להיום.
+
+ 
+
+האם רלוונטי לשבת יחד לדון בינינו על אופן בניית הפרויקט?
+
+ 
+
+בברכה,
+
+ערן
+
+ 
+
+ 
+
+Eran Morlevy 🎗️        
+Sales Planning Manager
+
+Product & Sales Division, Union Motors LTD   
+T:    972-77-3339026 
+
+M:   972-52-8406535 
+
+[../../../../../batheny/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/AppData/Local/Microsoft/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/P2WMGEK5/www.toyota.co.il]www.toyota.co.il
+
+ 
+
+ 
+
+מאת: Eran Morlevy
+נשלח: יום ה 24 יולי 2025 16:08
+אל: Kevin Liaks (Union Motors)‏ <Kevin.Liaks@uml.co.il>; Itai Hayoun Levin‏ <Itai.Hayoun@toyota.co.il>; Tommy Amir (Union Motors)‏ <Tommy.Amir@uml.co.il>
+נושא: RE: מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+חשיבות: גבוהה
+
+ 
+
+שלום כולם,
+
+ 
+
+מיפיתי השבוע את כלל הרכבים שנמכרו בחציון הראשון בשוק. הוספתי שיוך לסגמנט של כל מוצר.
+
+עוד נדרשת עבודה טכנית על איחוד שמות דגם (אצל מותגים מתחרים).
+
+ 
+
+באמצעות השדות הללו- ניתן כעת לבצע חיתוכים שונים עפ"י השאלות העסקיות הרלוונטיות.
+
+ 
+
+PARALLEL
+
+BRAND
+
+MODEL
+
+SEGMENT
+
+FUEL
+
+CHANNEL
+
+MONTH
+
+ 
+
+מצ"ב טבלאות מרכזות של נתונים עבור שאלות עסקיות – high level, עבורן, באמצעות "כניסה לנתונים" נוכל לצפות בפרטי הרכבים הספציפיים:
+
+מס. רישוי / מספר שלדה / קטאשיקי.
+
+ 
+
+כל הטבלאות שאני מציג כאן הינן דו ממדיות בלבד, אך באמצעות המודל יהיה אפשר לעשות חיתוכי עומק כדי לזהות מגמות.
+
+ 
+
+בין השאלות העסקיות שהמאגר מאפשר, למשל:
+
+זיהוי סוג הבעלות, של מוצרים מסוימים, בתקופה מסוימת, והאם נמכר ע"י יבואן טויוטה מקביל.
+
+ 
+
+ 
+
+לגבי שאלת קווין בנושא נראות הדשבורד- לאו דווקא הייתי רץ להצגת גרפים ואחוזים גדולים – אלא עצם מתן האפשרות לראות טבלאות ומתוכן לצלול לתוך המידע המטויב.
+
+ 
+
+שוב תודה רבה!
+
+ערן
+
+ 
+
+Eran Morlevy 🎗️        
+Sales Planning Manager
+
+Product & Sales Division, Union Motors LTD   
+T:    972-77-3339026 
+
+M:   972-52-8406535 
+
+[../../../../../batheny/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/AppData/Local/Microsoft/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/P2WMGEK5/www.toyota.co.il]www.toyota.co.il
+
+ 
+
+ 
+
+מאת: Kevin Liaks (Union Motors) <Kevin.Liaks@uml.co.il>
+נשלח: יום ד 16 יולי 2025 13:33
+אל: Eran Morlevy‏ <Eran.Morlevy@toyota.co.il>; Itai Hayoun Levin‏ <Itai.Hayoun@toyota.co.il>; Tommy Amir (Union Motors)‏ <Tommy.Amir@uml.co.il>
+נושא: Re:‏ מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+
+ 
+
+שלום לכולם,
+
+רוצה לעדכן שקיימתי פגישת התנעה עם ערן לצורך הבנת הדרישות. להלן השלבים הנדרשים:
+
+מוקאפ ראשוני
+יש רצוי לפני הפגישת BI הבאה, להגדיר אילו שאלות עסקיות נרצה למדוד וכיצד ייראה הדשבורד.
+
+באחריות: ערן
+
+טעינה יומית וזיהוי רשומות חדשות
+הטבלה מתעדכנת ברמה יומית, אך שדה התאריך כולל רק שנה וחודש. לפיכך, נבצע זיהוי של רשומות חדשות לפי ההבדלים היומיים, ונשייך אותן לתאריך הטעינה בפועל.
+
+באחריות: קווין
+
+ניקוי ואיחוד ערכים במאגר
+לדוגמה: הערכים "טויוטה יפן" ו"טויוטה טורקיה" יאוחדו לערך אחיד – "טויוטה". תהליך זה נדרש בשלושה שדות: תוצרת, רמת גימור וכינוי מסחרי.
+
+באחריות: ערן – להעביר את רשימת הערכים לאיחוד
+
+סיווג בין רכבים של יוניון ליבוא מקביל
+יתבצע על בסיס שדה "רמת גימור".
+
+באחריות: ערן – להעביר את המיפוי בין הרמות השייכות ליוניון לעומת יבוא מקביל
+
+ 
+
+תודה רבה,
+קווין
+
+ 
+
+מאת: Eran Morlevy <Eran.Morlevy@toyota.co.il>
+נשלח: שני, 14 ביולי, 2025 ‏09:58
+אל: Itai Hayoun Levin <Itai.Hayoun@toyota.co.il>; Tommy Amir (Union Motors) <Tommy.Amir@uml.co.il>; Kevin Liaks (Union Motors) <Kevin.Liaks@uml.co.il>
+נושא: RE: מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+
+ 
+
+תודה איתי.
+
+ 
+
+מצרף את התוצר שנכון להיום אנו מגיעים אליו, באמצעות הדוח שרוכשים כל רבעון ממשרד התחבורה.
+
+ 
+
+כאשר נתחבר ישירות למאגר הנתונים – נוכל לצפות בתוצאות המתחרים באופן מפולח, בכל יום נתון ועבור כל תקופה שנתעד,
+
+כולל- סוג בעלות! מספר רישוי ומספר שלדה.
+
+ 
+
+קווין,
+
+אשמח לפרט כל מה שנדרש, ובכל מקרה שנאפיין יחד אלו תוצרים ניתן להפיק מהמאגר.
+
+ 
+
+בברכה,
+
+ערן
+
+ 
+
+ 
+
+Eran Morlevy 🎗️        
+Sales Planning Manager
+
+Product & Sales Division, Union Motors LTD   
+T:    972-77-3339026 
+
+M:   972-52-8406535 
+
+[../../../../../batheny/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/AppData/Local/Microsoft/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/P2WMGEK5/www.toyota.co.il]www.toyota.co.il
+
+ 
+
+ 
+
+מאת: Itai Hayoun Levin <Itai.Hayoun@toyota.co.il>
+נשלח: יום א 13 יולי 2025 17:47
+אל: Tommy Amir (Union Motors)‏ <Tommy.Amir@uml.co.il>; Kevin Liaks (Union Motors)‏ <Kevin.Liaks@uml.co.il>; Eran Morlevy‏ <Eran.Morlevy@toyota.co.il>
+נושא: RE: מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+
+ 
+
+תודה רבה ערן
+
+ 
+
+קווין / תומי - בהמשך לשיחתנו היום – מצ"ב עבודתו של ערן באשר לתועלות שניתן לגזור מהמידע המצוי הפורטל משרד התחבורה
+
+ 
+
+אשמח לקדם דיון באשר לאפשרות לקחת קדימה ולפתח דך ה BI שלנו
+
+ 
+
+@Eran Morlevy – האם תוכל לשתף את תומי וקווין בדוגמה מהדוחות שאנו רוכשים ממשרת התחבורה בתשלום (מהדוחות שלבנה הייתה מפיצה) ?
+
+ 
+
+תודה
+
+איתי
+
+ 
+
+From: Eran Morlevy <Eran.Morlevy@toyota.co.il>
+Sent: Monday, June 30, 2025 2:06 PM
+To: Itai Hayoun Levin‏ <Itai.Hayoun@toyota.co.il>
+Subject: RE: מאגר מספרי רישוי של כלי רכב כולל בעלות - אתר משרד התחבורה
+Importance: High
+
+ 
+
+הי איתי,
+
+בהמשך לשיחתנו- להלן מיפוי ואיפיון מודל ה- BI והתחזוקה הנדרשים על מנת לעשות שימוש במאגר המידע מאתר מת"ח.
+
+ 
+
+ 
+
+המטרה היא מודל BI שניגש באופן יומי למאגר, מוריד אותו, מתרגם אותו, ומאפשר צפיה בנתונים נבחרים והפקת תוצאות לאקסל / דשבורד קבוע.
+
+ 
+
+כיום, אנחנו רוכשים ממשרד התחבורה פעם ברבעון דוח תוצאות גולמי של רבעון חולף (עלות כ- 4,500 ₪ ברבעון => 18,000 ₪ כל שנה).
+
+ 
+
+על גבי הנתונים האלו- לבנה היתה מטייבת באופן ידני כמה שדות על מנת "לאחד" לערכים חד-חד ערכיים שמות מוצרים שאמורים להיות זהים.
+
+ 
+
+גם עכשיו יהיה צורך לבנות מקרא עבור שדות אלו, ולתחזק אותו לדוגמא פעם ברבעון עבור מוצרים חדשים.
+
+ 
+
+לינק למאגר המידע הרלוונטי:
+
+https://data.gov.il/dataset/private-and-commercial-vehicles/resource/053cea08-09bc-40ec-8f7a-156f0677aff3
+
+ 
+
+השלבים שאני נאלץ לבצע היום על מנת לענות על שאלות עסקיות ו/או לקבל נתונים שיכולי להביא ערך מוסף:
+
+ 
+
+הורדת מאגר שיש בו כ-4 מיליון רשומות (מכיל תוצאות מ-1996 עד היום בבוקר)- יורד קובץ CSV של 1048576 (שוקל מעל 800 מגה)
+במקום זה- מתרגם את ה- CSV לאקסל באמצעות power query ומחלץ רק את שנת 2025.
+
+ 
+
+באקסל עם נתוני שנה נוכחית- מתרגם שמות מותגים שונים לשם גנריים עבור כל אחד (לדוגמא) מהטופ 10.
+ 
+
+על מנת לבדוק תוצאות ברמת דגם – שוב יש צורך לאחד שמות שונים של אותו מוצר לכדי שם גנרי חד-חד ערכי
+ 
+
+יש שדה שנקרא moed_aliya_lakvish אשר אומנם לא מציין יום ספציפי, אלא ראשון לחודש של רישום הרכב.
+הורדת המאגר באופן יומי ותיארוך של כל מס. רישוי- יאפשר לנו לזהות רישומים של מוצרים מסוימים, בימים מסוימים (סוף חודש) לפי סוג הבעלות (בעיקר- ליסינג / חברה).
+ 
+
+ 
+
+להלן השדות הקיימים במאגר:
+
+ 
+
+שדה
+
+נושא
+
+הערה
+
+mispar_rechev
+
+מס. רישוי
+
+חד-חד ערכי. שדה מוביל
+
+tozeret_cd
+
+קוד תוצר
+
+sug_degem
+
+פרטי/מסחרי
+
+tozeret_nm
+
+תוצר = מותג + מדינת ייצור
+
+נדרשת האחדה של שמות שונים לכדי "שם מותג"
+
+degem_cd
+
+קוד דגם
+
+degem_nm
+
+קוד דגם יצרן (קטאשיקי)
+
+ramat_gimur
+
+רמת גימור
+
+אפשר אבל לא חייב לבצע האחדת שמות. מאפשר לזהות מוצרי יוניון
+
+ramat_eivzur_betihuty
+
+נתון רמת אבזור בטיחותי
+
+לא קריטי לתחזק בשוטף
+
+kvutzat_zihum
+
+נתון קבוצת זיהום
+
+לא קריטי לתחזק בשוטף
+
+shnat_yitzur
+
+שנת רישוי
+
+degem_manoa
+
+נתון טכני דגם מנוע
+
+mivchan_acharon_dt
+
+נתון תאריך מבחן אחרון
+
+tokef_dt
+
+נתון תאריך תוקף
+
+baalut
+
+בעלות (פרטי, ליסינג, חברה, השכרה, סוחר)
+
+מידע קריטי
+
+misgeret
+
+מספר שלדה
+
+מאפשר לאתר שלדות שאינן של יוניון
+
+tzeva_cd
+
+קוד צבע
+
+tzeva_rechev
+
+תיאור צבע
+
+zmig_kidmi
+
+נתון טכני מידת צמיג קדמי
+
+לא קריטי לתחזק בשוטף
+
+zmig_ahori
+
+נתון טכני מידת צמיג אחורי
+
+לא קריטי לתחזק בשוטף
+
+sug_delek_nm
+
+סוג דלק (בנזין,דיזל,פלאגין,חשמלי)
+
+אין מיפוי הייבריד
+
+horaat_rishum
+
+הוראת רישום
+
+moed_aliya_lakvish
+
+חודש עליה לכביש
+
+אין זיהוי יום. צריך להוריד מאגר כל יום כדי לזהות
+
+kinuy_mishari
+
+שם דגם (מאוד מפוזר)
+
+נדרשת האחדה של שמות שונים לכדי "שם דגם". מאפשר לזהות מוצרי יוניון
+
+ 
+
+ 
+
+ 
+
+Eran Morlevy 🎗️        
+Sales Planning Manager
+
+Product & Sales Division, Union Motors LTD   
+T:    972-77-3339026 
+
+M:   972-52-8406535 
+
+[../../../../../batheny/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/AppData/Local/Microsoft/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/AppData/Local/Microsoft/Windows/Temporary%20Internet%20Files/Content.Outlook/P2WMGEK5/www.toyota.co.il]www.toyota.co.il
+
+ 
+
+ 
+
+מאת: Eran Morlevy
+נשלח: יום ד 04 יוני 2025 08:52
+אל: Itai Hayoun Levin‏ <Itai.Hayoun@toyota.co.il>
+נושא: RE: מאגר מספרי רישוי של כלי רכב - אתר משרד התחבורה
+
+ 
+
+﻿
+
+הי איתי,
+
+בהמשך לניתוח שביצעתי אתמול עבור ידיעת היח"צ שאנדרו ביקש מהדר-
+
+ 
+
+זה שהגעתי לנתוני מת"ח באקסל – זה רק הצעד הראשון.
+
+ 
+
+אני אצטרך שנבנה מודל BI שיודע לקרוא את המידע הזה (כנראה באותו אופן שאני ניגשתי למאגר), אך משם יציג נתונים "מטוייבים".
+
+ 
+
+מה הכוונה מטוייבים?
+
+רשימה סגורה של:
+
+שמות מותגים,
+כינוי מסחרי,
+סוג דלק,
+חודש – יכולת להשוות מצטבר שנתי לאשתקד,
+וכו...
+ 
+
+מה שיידרש זה לתחזק מקרא לכל שדה, לא סוף העולם.
+
+ 
+
+אשמח שנקדם בהמשך לפגישת מאגר העברת בעלות ממשלתי.
+
+ 
+
+בברכה,
+
+ערן

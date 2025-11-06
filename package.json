@@ -1,0 +1,39 @@
+{
+  "name": "gov-mashup-dashboard",
+  "version": "1.0.0",
+  "description": "Qlik Sense mashup dashboard for vehicle registration analytics from Gov.il portal data",
+  "main": "mashup/mashup.js",
+  "scripts": {
+    "build": "babel mashup --out-dir dist --source-maps",
+    "watch": "babel mashup --out-dir dist --source-maps --watch",
+    "lint": "eslint mashup/**/*.js",
+    "lint:fix": "eslint mashup/**/*.js --fix",
+    "serve": "npx http-server . -p 8080 -c-1"
+  },
+  "keywords": [
+    "qlik-sense",
+    "mashup",
+    "dashboard",
+    "analytics",
+    "hebrew",
+    "rtl"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "eslint": "^8.52.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ]
+}

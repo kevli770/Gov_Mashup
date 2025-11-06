@@ -1,0 +1,276 @@
+/**
+ * Main Layout Styles - RTL (Right-to-Left) Aware
+ * Using CSS Logical Properties for proper RTL support
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  background-color: var(--color-surface);
+  border-block-end: 1px solid var(--color-border);
+  padding-inline: var(--dashboard-padding);
+  padding-block: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--dashboard-header-height);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-sticky);
+}
+
+.dashboard-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+/* Refresh Button */
+.refresh-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-inline: var(--space-lg);
+  padding-block: var(--space-sm);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.refresh-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.refresh-button:active {
+  transform: scale(0.98);
+}
+
+.refresh-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.refresh-icon {
+  font-size: 1.25rem;
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+
+.refresh-button:hover .refresh-icon {
+  transform: rotate(180deg);
+}
+
+/* Main Dashboard Content */
+.dashboard-main {
+  flex: 1;
+  padding: var(--dashboard-padding);
+  max-width: var(--max-width-2xl);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* KPI Section */
+.kpi-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  margin-block-end: var(--space-2xl);
+}
+
+/* KPI Cards */
+.kpi-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  min-height: var(--kpi-card-min-height);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: default;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.kpi-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.kpi-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-percentage {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-brand {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.kpi-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Charts Section */
+.charts-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--space-lg);
+}
+
+.chart-container {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.chart-container--full-width {
+  grid-column: 1 / -1;
+}
+
+.chart-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-block-end: var(--space-lg);
+  padding-block-end: var(--space-md);
+  border-block-end: 2px solid var(--color-border);
+}
+
+.chart {
+  min-height: var(--chart-min-height);
+  width: 100%;
+}
+
+/* Models List */
+.models-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.models-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  background-color: var(--color-hover);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.models-list li:hover {
+  background-color: var(--color-border);
+}
+
+/* Dashboard Footer */
+.dashboard-footer {
+  background-color: var(--color-surface);
+  border-block-start: 1px solid var(--color-border);
+  padding: var(--space-lg);
+  text-align: center;
+  margin-block-start: auto;
+}
+
+.dashboard-footer p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Loading State */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--color-hover), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Error State */
+.error {
+  border-color: var(--color-error);
+  background-color: oklch(0.97 0.05 20);
+}
+
+.error-message {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  padding: var(--space-sm);
+  background-color: oklch(0.95 0.08 20);
+  border-radius: var(--radius-sm);
+  margin-block-start: var(--space-sm);
+}

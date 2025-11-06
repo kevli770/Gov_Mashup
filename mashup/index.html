@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="לוח מחוונים לניתוח נתוני רישוי רכב מפורטל Gov.il">
+    <title>לוח מחוונים - ניתוח רישוי רכב</title>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/typography.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+
+    <!-- Qlik Sense Capability APIs -->
+    <script src="http://localhost:4848/resources/assets/external/requirejs/require.js"></script>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <h1>לוח מחוונים - ניתוח רישוי רכב</h1>
+        <button id="refresh-button" class="refresh-button" aria-label="רענן נתונים">
+            <span class="refresh-icon">⟳</span>
+            <span class="refresh-text">רענן</span>
+        </button>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+        <!-- KPI Cards Section (User Story 1) -->
+        <section class="kpi-section" aria-label="מחוונים עיקריים">
+            <div id="kpi-card-1" class="kpi-card" role="article" aria-labelledby="kpi-1-title">
+                <div class="kpi-card-content">
+                    <h2 id="kpi-1-title" class="kpi-title">סה"כ רכבים</h2>
+                    <p class="kpi-value" aria-live="polite">--</p>
+                    <p class="kpi-label">רכבים פעילים</p>
+                </div>
+            </div>
+
+            <div id="kpi-card-2" class="kpi-card" role="article" aria-labelledby="kpi-2-title">
+                <div class="kpi-card-content">
+                    <h2 id="kpi-2-title" class="kpi-title">רכבי יוניון מוטורס</h2>
+                    <p class="kpi-value" aria-live="polite">--</p>
+                    <p class="kpi-percentage" aria-live="polite">--%</p>
+                    <p class="kpi-label">מסך הרכבים</p>
+                </div>
+            </div>
+
+            <div id="kpi-card-3" class="kpi-card" role="article" aria-labelledby="kpi-3-title">
+                <div class="kpi-card-content">
+                    <h2 id="kpi-3-title" class="kpi-title">מותג מוביל</h2>
+                    <p class="kpi-brand" aria-live="polite">--</p>
+                    <p class="kpi-value" aria-live="polite">--</p>
+                    <p class="kpi-label">רכבים</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section (User Stories 2-4) -->
+        <section class="charts-section">
+            <!-- Brand & Ownership Charts (User Story 2) -->
+            <div class="chart-row">
+                <div id="brand-chart-container" class="chart-container">
+                    <h3 class="chart-title">התפלגות מותגים</h3>
+                    <div id="brand-chart" class="chart" role="img" aria-label="תרשים עוגה - התפלגות מותגים"></div>
+                </div>
+
+                <div id="ownership-chart-container" class="chart-container">
+                    <h3 class="chart-title">התפלגות בעלות</h3>
+                    <div id="ownership-chart" class="chart" role="img" aria-label="תרשים עמודות - התפלגות בעלות"></div>
+                </div>
+            </div>
+
+            <!-- Fuel & Models Charts (User Story 3) -->
+            <div class="chart-row">
+                <div id="fuel-chart-container" class="chart-container">
+                    <h3 class="chart-title">סוגי דלק</h3>
+                    <div id="fuel-chart" class="chart" role="img" aria-label="תרשים דונאט - סוגי דלק"></div>
+                </div>
+
+                <div id="models-list-container" class="chart-container">
+                    <h3 class="chart-title">דגמי יוניון מובילים</h3>
+                    <ol id="models-list" class="models-list" aria-label="רשימת דגמי יוניון מובילים"></ol>
+                </div>
+            </div>
+
+            <!-- Year Trends Chart (User Story 4) -->
+            <div class="chart-row">
+                <div id="year-chart-container" class="chart-container chart-container--full-width">
+                    <h3 class="chart-title">מגמות רישום לפי שנה</h3>
+                    <div id="year-chart" class="chart" role="img" aria-label="תרשים עמודות - מגמות רישום לפי שנה"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dashboard Footer -->
+    <footer class="dashboard-footer">
+        <p>מקור נתונים: פורטל Gov.il | עדכון אחרון: <span id="last-update">--</span></p>
+    </footer>
+
+    <!-- Main Mashup Script -->
+    <script>
+        require.config({
+            baseUrl: "http://localhost:4848/resources",
+            paths: {
+                qlik: "js/qlik"
+            }
+        });
+
+        require(["../mashup"], function(mashup) {
+            // Mashup initialization handled in mashup.js
+        });
+    </script>
+</body>
+</html>
