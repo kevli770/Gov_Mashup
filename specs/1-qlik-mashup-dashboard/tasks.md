@@ -71,9 +71,10 @@ T001-T011 (Setup) → T012-T018 (Foundation) → T019 (Qlik Connection Test) →
 ```
 
 **Blocking Tasks**:
-- T012: Qlik load script implementation (blocks all hypercubes)
-- T018: Qlik connection configuration (blocks all data fetching)
-- T019: Connection validation (blocks all components)
+- T012-T014: Qlik load script and data loading (blocks all Qlik work)
+- T015-T016: Master Items setup in Qlik Sense (blocks hypercube development)
+- T019: Qlik connection configuration (blocks all data fetching)
+- T020: Connection validation (blocks all components)
 
 **Parallel Opportunities**:
 - Within each user story: Hypercube definitions can be written in parallel
@@ -115,25 +116,31 @@ T004, T005, T007, T008, T009, T010
 
 ### Tasks
 
-- [ ] T012 Implement Qlik Sense load script in qlik-app/load-scripts/data-load.qvs (already created - validate)
-- [ ] T013 [P] Create qlik-app/load-scripts/mappings.qvs with Brand/Model/Trim mapping tables
-- [ ] T014 Load data into Qlik Sense Desktop application using data-load.qvs script
-- [ ] T015 Validate data model in Qlik Sense: Check Brand_Canonical, Union_Flag, calculated fields
-- [ ] T016 [P] Create mashup/lib/hypercubes.js catalog file (empty template for all 8 hypercubes)
-- [ ] T017 [P] Create mashup/lib/hebrew-locale.js with toLocaleString('he-IL') formatting utilities
-- [ ] T018 Implement mashup/mashup.js with Qlik connection logic using RequireJS and qlik.js
-- [ ] T019 Test Qlik connection: Validate app.createCube() works and returns data
+- [ ] T012 Validate Qlik Sense load script in qlik-app/load-scripts/data-load.qvs (already created)
+- [ ] T013 Load data into Qlik Sense Desktop application using data-load.qvs script
+- [ ] T014 Validate data model in Qlik Sense: Check Brand_Canonical, Union_Flag, calculated fields
+- [ ] T015 Create Master Items in Qlik Sense per qlik-app/master-items-setup.md (3 variables, 8 dimensions, 12 measures)
+- [ ] T016 Test Master Items in Qlik Sense: Create test sheet and verify all measures calculate correctly
+- [ ] T017 [P] Create mashup/lib/hypercubes.js catalog file (empty template for all 8 hypercubes)
+- [ ] T018 [P] Create mashup/lib/hebrew-locale.js with toLocaleString('he-IL') formatting utilities
+- [ ] T019 Implement mashup/mashup.js with Qlik connection logic using RequireJS and qlik.js
+- [ ] T020 Test Qlik connection: Validate app.createCube() works and returns data
 
 **Dependencies**:
-- T013 depends on T012 (needs data structure)
-- T014 depends on T012, T013 (needs scripts ready)
-- T015 depends on T014 (needs data loaded)
-- T018 depends on T011 (needs config)
-- T019 depends on T018 (needs connection established)
+- T012: Independent (script already exists - just validate)
+- T013 depends on T012 (needs script validated)
+- T014 depends on T013 (needs data loaded)
+- T015 depends on T014 (needs data model validated)
+- T016 depends on T015 (needs master items created)
+- T017-T018 can run in parallel (different files)
+- T019 depends on T011 (needs config)
+- T020 depends on T019 (needs connection established)
 
 **Test Criteria**:
 - Qlik Sense Desktop loads data without errors
 - Data model shows all calculated fields (Brand_Canonical, Union_Flag, etc.)
+- All master items (3 variables, 8 dimensions, 12 measures) created successfully
+- Test sheet in Qlik shows correct calculations and Hebrew labels
 - mashup/mashup.js successfully connects to Qlik app
 - Test hypercube returns expected data structure
 
@@ -152,34 +159,34 @@ T004, T005, T007, T008, T009, T010
 
 ### Hypercube Definitions
 
-- [ ] T020 [P] [US1] Define hypercube for KPI 1 (Total Vehicles) in mashup/lib/hypercubes.js
-- [ ] T021 [P] [US1] Define hypercube for KPI 2 (Union Motors count & percentage) in mashup/lib/hypercubes.js
-- [ ] T022 [P] [US1] Define hypercube for KPI 3 (Top Brand summary) in mashup/lib/hypercubes.js
+- [ ] T021 [P] [US1] Define hypercube for KPI 1 (Total Vehicles) in mashup/lib/hypercubes.js
+- [ ] T022 [P] [US1] Define hypercube for KPI 2 (Union Motors count & percentage) in mashup/lib/hypercubes.js
+- [ ] T023 [P] [US1] Define hypercube for KPI 3 (Top Brand summary) in mashup/lib/hypercubes.js
 
 ### Component Implementation
 
-- [ ] T023 [US1] Create mashup/components/kpi-cards.js with KPICard class for rendering
-- [ ] T024 [US1] Implement KPI Card 1 (Total Vehicles) with hypercube integration in kpi-cards.js
-- [ ] T025 [US1] Implement KPI Card 2 (Union Motors) with percentage calculation in kpi-cards.js
-- [ ] T026 [US1] Implement KPI Card 3 (Top Brand) with brand name display in kpi-cards.js
-- [ ] T027 [US1] Add hover states to KPI cards with detailed breakdowns (CSS transitions)
-- [ ] T028 [US1] Create mashup/components/refresh-button.js with click handler for data reload
-- [ ] T029 [US1] Integrate all 3 KPI cards into mashup/index.html and test end-to-end
+- [ ] T024 [US1] Create mashup/components/kpi-cards.js with KPICard class for rendering
+- [ ] T025 [US1] Implement KPI Card 1 (Total Vehicles) with hypercube integration in kpi-cards.js
+- [ ] T026 [US1] Implement KPI Card 2 (Union Motors) with percentage calculation in kpi-cards.js
+- [ ] T027 [US1] Implement KPI Card 3 (Top Brand) with brand name display in kpi-cards.js
+- [ ] T028 [US1] Add hover states to KPI cards with detailed breakdowns (CSS transitions)
+- [ ] T029 [US1] Create mashup/components/refresh-button.js with click handler for data reload
+- [ ] T030 [US1] Integrate all 3 KPI cards into mashup/index.html and test end-to-end
 
 **Parallel Execution Example**:
 ```bash
-# Hypercube definitions (T020, T021, T022) can be written in parallel
+# Hypercube definitions (T021, T022, T023) can be written in parallel
 # After hypercubes defined, components can be built in parallel:
-# - T024 (KPI 1), T025 (KPI 2), T026 (KPI 3), T028 (Refresh button)
+# - T025 (KPI 1), T026 (KPI 2), T027 (KPI 3), T029 (Refresh button)
 ```
 
 **Dependencies**:
-- T020-T022 depend on T016 (hypercubes.js template)
-- T023 depends on T017 (needs Hebrew locale utilities)
-- T024-T026 depend on T020-T022 (need hypercube definitions)
-- T027 depends on T024-T026 (needs cards implemented)
-- T028 depends on T018 (needs Qlik connection)
-- T029 depends on T024-T028 (integration of all components)
+- T021-T023 depend on T017 (hypercubes.js template)
+- T024 depends on T018 (needs Hebrew locale utilities)
+- T025-T027 depend on T021-T023 (need hypercube definitions)
+- T028 depends on T025-T027 (needs cards implemented)
+- T029 depends on T019 (needs Qlik connection)
+- T030 depends on T025-T029 (integration of all components)
 
 **Acceptance Tests** (from spec.md User Story 1):
 1. Dashboard loads → see 3 KPI cards with Hebrew-formatted numbers ✅
@@ -200,17 +207,17 @@ T004, T005, T007, T008, T009, T010
 
 ### Hypercube Definitions
 
-- [ ] T030 [P] [US2] Define hypercube for Brand Distribution (top 5, sorted by count) in mashup/lib/hypercubes.js
-- [ ] T031 [P] [US2] Define hypercube for Ownership Distribution (all types) in mashup/lib/hypercubes.js
+- [ ] T034 [P] [US2] Define hypercube for Brand Distribution (top 5, sorted by count) in mashup/lib/hypercubes.js
+- [ ] T034 [P] [US2] Define hypercube for Ownership Distribution (all types) in mashup/lib/hypercubes.js
 
 ### Component Implementation
 
-- [ ] T032 [P] [US2] Create mashup/components/brand-chart.js for pie chart visualization
-- [ ] T033 [P] [US2] Create mashup/components/ownership-chart.js for bar chart visualization
-- [ ] T034 [US2] Implement brand chart with hypercube integration and Hebrew labels in brand-chart.js
-- [ ] T035 [US2] Implement ownership chart with hypercube integration in ownership-chart.js
-- [ ] T036 [US2] Add tooltips to both charts showing exact values on hover
-- [ ] T037 [US2] Integrate brand and ownership charts into mashup/index.html
+- [ ] T034 [P] [US2] Create mashup/components/brand-chart.js for pie chart visualization
+- [ ] T034 [P] [US2] Create mashup/components/ownership-chart.js for bar chart visualization
+- [ ] T038 [US2] Implement brand chart with hypercube integration and Hebrew labels in brand-chart.js
+- [ ] T038 [US2] Implement ownership chart with hypercube integration in ownership-chart.js
+- [ ] T038 [US2] Add tooltips to both charts showing exact values on hover
+- [ ] T038 [US2] Integrate brand and ownership charts into mashup/index.html
 
 **Parallel Execution Example**:
 ```bash
@@ -245,30 +252,30 @@ T004, T005, T007, T008, T009, T010
 
 ### Hypercube Definitions
 
-- [ ] T038 [P] [US3] Define hypercube for Fuel Distribution in mashup/lib/hypercubes.js
-- [ ] T039 [P] [US3] Define hypercube for Top Union Models (filtered by Union_Flag=1) in mashup/lib/hypercubes.js
+- [ ] T042 [P] [US3] Define hypercube for Fuel Distribution in mashup/lib/hypercubes.js
+- [ ] T042 [P] [US3] Define hypercube for Top Union Models (filtered by Union_Flag=1) in mashup/lib/hypercubes.js
 
 ### Component Implementation
 
-- [ ] T040 [P] [US3] Create mashup/components/fuel-chart.js for donut chart visualization
-- [ ] T041 [P] [US3] Create mashup/components/models-list.js for ranked list component
-- [ ] T042 [US3] Implement fuel chart with hypercube integration in fuel-chart.js
-- [ ] T043 [US3] Implement models list with ranking (1-5) and hypercube integration in models-list.js
-- [ ] T044 [US3] Integrate fuel chart and models list into mashup/index.html
+- [ ] T042 [P] [US3] Create mashup/components/fuel-chart.js for donut chart visualization
+- [ ] T042 [P] [US3] Create mashup/components/models-list.js for ranked list component
+- [ ] T045 [US3] Implement fuel chart with hypercube integration in fuel-chart.js
+- [ ] T045 [US3] Implement models list with ranking (1-5) and hypercube integration in models-list.js
+- [ ] T045 [US3] Integrate fuel chart and models list into mashup/index.html
 
 **Parallel Execution Example**:
 ```bash
-# Hypercube definitions: T038, T039
-# Component creation: T040, T041
-# Implementation: T042, T043
+# Hypercube definitions: T039, T040
+# Component creation: T041, T042
+# Implementation: T043, T044
 ```
 
 **Dependencies**:
-- T038-T039 depend on T016
-- T040-T041 can be created in parallel
-- T042 depends on T038, T040
+- T039-T040 depend on T017
+- T041-T042 can be created in parallel
 - T043 depends on T039, T041
-- T044 depends on T042, T043
+- T044 depends on T040, T042
+- T045 depends on T043, T044
 
 **Acceptance Tests** (from spec.md User Story 3):
 1. View fuel types → see donut chart with Hebrew-formatted counts ✅
@@ -288,14 +295,14 @@ T004, T005, T007, T008, T009, T010
 
 ### Hypercube Definition
 
-- [ ] T045 [US4] Define hypercube for Year Distribution (last 5 years) in mashup/lib/hypercubes.js
+- [ ] T050 [US4] Define hypercube for Year Distribution (last 5 years) in mashup/lib/hypercubes.js
 
 ### Component Implementation
 
-- [ ] T046 [US4] Create mashup/components/year-chart.js for year distribution bar chart
-- [ ] T047 [US4] Implement year chart with hypercube integration and year labels in year-chart.js
-- [ ] T048 [US4] Add value labels above each bar showing exact counts
-- [ ] T049 [US4] Integrate year chart into mashup/index.html
+- [ ] T050 [US4] Create mashup/components/year-chart.js for year distribution bar chart
+- [ ] T050 [US4] Implement year chart with hypercube integration and year labels in year-chart.js
+- [ ] T050 [US4] Add value labels above each bar showing exact counts
+- [ ] T050 [US4] Integrate year chart into mashup/index.html
 
 **Dependencies**:
 - T045 depends on T016
@@ -317,12 +324,12 @@ T004, T005, T007, T008, T009, T010
 
 ### Tasks
 
-- [ ] T050 Run axe DevTools accessibility scan on complete dashboard and fix all critical issues
-- [ ] T051 Test screen reader compatibility (NVDA on Windows) for all KPI cards and charts
-- [ ] T052 Validate performance targets: Dashboard load < 3s desktop, < 5s mobile 3G
-- [ ] T053 Test responsive layout on mobile (375px), tablet (768px), desktop (1280px)
-- [ ] T054 Add error handling for Qlik connection failures (display user-friendly message)
-- [ ] T055 Create mashup/README.md with setup instructions and deployment guide
+- [ ] T051 Run axe DevTools accessibility scan on complete dashboard and fix all critical issues
+- [ ] T052 Test screen reader compatibility (NVDA on Windows) for all KPI cards and charts
+- [ ] T053 Validate performance targets: Dashboard load < 3s desktop, < 5s mobile 3G
+- [ ] T054 Test responsive layout on mobile (375px), tablet (768px), desktop (1280px)
+- [ ] T055 Add error handling for Qlik connection failures (display user-friendly message)
+- [ ] T056 Create mashup/README.md with setup instructions and deployment guide
 
 **Dependencies**:
 - T050-T053 depend on all user stories being complete (T029, T037, T044, T049)
