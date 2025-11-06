@@ -2,6 +2,13 @@
 
 **Branch**: `1-qlik-mashup-dashboard` | **Date**: 2025-11-06 | **Spec**: [spec.md](spec.md)
 **Input**: Feature specification from `/specs/1-qlik-mashup-dashboard/spec.md`
+**Last Updated**: 2025-11-06 with user clarifications
+
+> **CRITICAL CLARIFICATIONS**:
+> - **Data Source**: 42-field structure from "table for example.xlsx" (actual raw table)
+> - **Data Loading**: Entirely within Qlik Sense load script (see [qlik-app/load-scripts/data-load.qvs](../../qlik-app/load-scripts/data-load.qvs))
+> - **Technology Stack**: Vanilla HTML/CSS/JS + Qlik Capabilities API (**NO** Next.js, React, Vue, or frameworks)
+> - **Visual Reference**: DASHBOARD-VISUAL-SPEC.md is VISUAL INSPIRATION ONLY (colors, layout) - NOT technical implementation guide
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
@@ -20,8 +27,9 @@ Create a Qlik Sense mashup dashboard that displays vehicle registration analytic
 
 **Storage**:
 - Qlik Sense application (.qvf file) with data model
-- Data source: Gov.il CSV (4+ million records, loaded daily into Qlik app)
+- Data source: Gov.il CSV/Excel with 42-field structure (loaded via Qlik load script)
 - No separate database - all data managed by Qlik Sense engine
+- Data volume determined from actual loaded data (not pre-assumed)
 
 **Testing**:
 - Manual browser testing with connected Qlik app (Chrome, Firefox, Edge, Safari)
@@ -54,12 +62,12 @@ Create a Qlik Sense mashup dashboard that displays vehicle registration analytic
 - Performance constrained by Qlik engine capacity (4+ million records aggregated server-side)
 
 **Scale/Scope**:
-- Data volume: 4+ million vehicle records (1996-2025)
-- Daily data load: ~800MB CSV file from Gov.il portal
-- Current year focus: Primarily 2025 data with historical comparisons (last 5 years)
+- Data structure: 42 fields from source table (see "table for example.xlsx")
+- Data loading: Via Qlik Sense load script with mapping transformations
+- Current year focus: Primarily current year data with historical comparisons (last 5 years)
 - Visualizations: 3 KPI cards, 5 charts (pie, bar, donut, list, trend)
 - User base: Sales Planning and Product Division team (< 50 concurrent users expected)
-- Qlik app size: Estimated 1-2 GB QVF after optimization
+- Qlik app size: Determined by actual data volume
 
 ## Constitution Check
 

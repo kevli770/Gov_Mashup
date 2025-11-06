@@ -4,36 +4,37 @@
 **Date**: 2025-11-06
 **Purpose**: Define the Qlik Sense data model structure, field definitions, and data transformation logic for the Gov.il vehicle registration dashboard
 
+> **IMPORTANT**: This data model is based on the actual table structure from "table for example.xlsx" (42 fields). All data loading and transformation happens within the Qlik Sense load script. The mashup uses vanilla HTML/CSS/JS with Qlik Capabilities API (no React, Next.js, or frameworks).
+
 ## Overview
 
 This document describes the Qlik Sense application data model that powers the mashup dashboard. The data model consists of:
 
-1. **Fact Table**: Vehicle Registration Records (4+ million rows, 1996-2025)
+1. **Fact Table**: Vehicle Registration Records (from 42-field source table)
 2. **Dimension Tables**: Brand Master, Model Master (mapping tables)
 3. **Calculated Fields**: Derived metrics and classifications
 4. **Aggregations**: Pre-calculated summaries for performance
 
-The Qlik Sense application (.qvf file) will load daily from the Gov.il CSV source, apply standardization mappings, and create calculated fields for dashboard consumption.
+The Qlik Sense application (.qvf file) will load data from the Gov.il source via the load script, apply standardization mappings, and create calculated fields for dashboard consumption.
 
 ---
 
 ## Data Source
 
-### Gov.il CSV File
+### Gov.il Data Source
 
 **Source URL**: https://data.gov.il/dataset/private-and-commercial-vehicles/resource/053cea08-09bc-40ec-8f7a-156f0677aff3
 
 **File Characteristics**:
-- Format: CSV (UTF-8 encoded)
-- Size: ~800MB per file
-- Rows: 4+ million records (1996-present)
-- Update Frequency: Daily (new records added overnight)
-- Historical Data: Complete vehicle registry from 1996 to current date
+- Format: CSV/Excel (UTF-8 encoded)
+- Structure: 42 fields as shown in "table for example.xlsx"
+- Update Frequency: Regular updates from Gov.il portal
+- Historical Data: Vehicle registry data with year-month timestamps
 
 **Load Strategy**:
-- Full load daily (replace entire dataset)
-- Filter to 2020+ for primary analysis (performance optimization)
-- Retain full history in separate QVD for historical queries
+- Load via Qlik Sense load script
+- Apply standardization mappings during load
+- Data volume and historical range determined from actual loaded data
 
 ---
 
@@ -45,33 +46,51 @@ The Qlik Sense application (.qvf file) will load daily from the Gov.il CSV sourc
 ### Description
 Core fact table containing one row per registered vehicle. Each row represents a unique vehicle identified by license plate number (`mispar_rechev`).
 
-### Source Fields (from Gov.il CSV)
+### Source Fields (from "table for example.xlsx")
 
-| Field Name (Hebrew) | English Description | Data Type | Example | Notes |
-|---------------------|---------------------|-----------|---------|-------|
-| `mispar_rechev` | License plate number | String(10) | "12345678" | Unique identifier, primary key |
-| `tozeret_cd` | Manufacturer code | String(10) | "TOY001" | Qlik dimension |
-| `sug_degem` | Vehicle type | String(20) | "פרטי" (Private) | "פרטי" or "מסחרי" |
-| `tozeret_nm` | Manufacturer name (raw) | String(100) | "טויוטה יפן" | Requires standardization |
-| `degem_cd` | Model code | String(20) | "1234" | Internal code |
-| `degem_nm` | Model technical name | String(100) | "ZRE212L-AEMGKW" | Katashiki (chassis code) |
-| `ramat_gimur` | Trim level | String(100) | "C SPORT" | Used for Union classification |
-| `ramat_eivzur_betihuty` | Safety equipment level | String(50) | "5" | Optional field |
-| `kvutzat_zihum` | Emissions group | String(20) | "EURO6" | Optional field |
-| `shnat_yitzur` | Manufacturing year | Integer | 2024 | Registration year (not build year) |
-| `degem_manoa` | Engine model | String(50) | "2ZR-FE" | Technical field |
-| `mivchan_acharon_dt` | Last inspection date | Date | "2024-01-15" | Optional field |
-| `tokef_dt` | Expiry date | Date | "2025-01-15" | Optional field |
-| `baalut` | Ownership type | String(20) | "פרטי", "ליסינג", "חברה" | Critical dimension |
-| `misgeret` | Chassis number (VIN) | String(17) | "JTDBR3EE20J123456" | Used to identify non-Union vehicles |
-| `tzeva_cd` | Color code | String(10) | "040" | Optional field |
-| `tzeva_rechev` | Color description | String(50) | "לבן" (White) | Optional field |
-| `zmig_kidmi` | Front tire size | String(30) | "215/55R17" | Technical field |
-| `zmig_ahori` | Rear tire size | String(30) | "215/55R17" | Technical field |
-| `sug_delek_nm` | Fuel type | String(50) | "בנזין", "דיזל", "חשמלי" | Critical dimension |
-| `horaat_rishum` | Registration instruction | String(100) | Various | Optional field |
-| `moed_aliya_lakvish` | Registration month | Date(YYYY-MM) | "2024-01" | Year-month only, no day |
-| `kinuy_mishari` | Commercial model name (raw) | String(100) | "קורולה קרוס" | Requires standardization |
+**Complete 42-Field Structure**:
+
+| # | Field Name | Data Type | Example | Purpose | Notes |
+|---|------------|-----------|---------|---------|-------|
+| 1 | `DB_NAME` | Text | "DWH" | Metadata | Database name |
+| 2 | `DB_SOURCE` | Text | Server name | Metadata | Database server |
+| 3 | `RELOAD_TIME` | DateTime | "DD/MM/YYYY HH:MM:SS" | Metadata | Load timestamp |
+| 4 | `_id` | Number | 12345 | Identifier | Record ID |
+| 5 | `mispar_rechev` | Number | 12345678 | **Primary Key** | 8-digit vehicle number |
+| 6 | `baalut` | Text (Hebrew) | "פרטי" | **Dimension** | Ownership type |
+| 7-19 | `P_result_*` | Various | API metadata | Metadata | API response fields |
+| 20 | `tozeret_cd` | Number | 1234 | Dimension | Manufacturer code |
+| 21 | `sug_degem` | Text | "P/M" | Dimension | Model type |
+| 22 | `tozeret_nm` | Text (Hebrew) | "טויוטה יפן" | **Dimension** | Manufacturer (needs mapping) |
+| 23 | `degem_cd` | Number | 5678 | Identifier | Model code |
+| 24 | `degem_nm` | Text | "ZRE212L-AEMGKW" | Technical | Model technical name |
+| 25 | `ramat_gimur` | Text | "C SPORT" | **Critical** | Trim level (Union classification) |
+| 26 | `ramat_eivzur_betihuty` | Text→Number | "1-3" | Technical | Safety rating |
+| 27 | `kvutzat_zihum` | Text→Number | "3-15" | Technical | Pollution group |
+| 28 | `shnat_yitzur` | Number | 2025 | **Dimension** | Manufacturing year |
+| 29 | `degem_manoa` | Text | "2ZR-FE" | Technical | Engine model |
+| 30 | `mivchan_acharon_dt` | Text→Date | "YYYY-MM-DD" | Date | Last inspection |
+| 31 | `tokef_dt` | Text→Date | "YYYY-MM-DD" | Date | Expiry date |
+| 32 | `misgeret` | Text | VIN/Chassis | Identifier | VIN number |
+| 33 | `tzeva_cd` | Number | 040 | Dimension | Color code |
+| 34 | `tzeva_rechev` | Text (Hebrew) | "לבן" | Dimension | Color name |
+| 35 | `zmig_kidmi` | Text | "215/55R17" | Technical | Front tire |
+| 36 | `zmig_ahori` | Text | "215/55R17" | Technical | Rear tire |
+| 37 | `sug_delek_nm` | Text (Hebrew) | "בנזין" | **Dimension** | Fuel type |
+| 38 | `horaat_rishum` | Text→Number | 6-digit | Technical | Registration instruction |
+| 39 | `moed_aliya_lakvish` | Text→Date | "YYYY-MM" | **Critical** | Registration month |
+| 40 | `kinuy_mishari` | Text | "YARIS" | **Dimension** | Commercial name (needs mapping) |
+| 41 | `Create_Date` | DateTime | Timestamp | Metadata | Record creation |
+| 42 | `Update_Date` | Text | "-" or date | Metadata | Record update |
+
+**Key Fields for Dashboard**:
+- **Primary Key**: `mispar_rechev` (license plate number)
+- **Brand Mapping**: `tozeret_nm` → `Brand_Canonical`
+- **Model Mapping**: `kinuy_mishari` → `Model_Canonical`
+- **Union Classification**: `ramat_gimur` → `Union_Flag` (via trim mapping)
+- **Ownership Analysis**: `baalut`
+- **Fuel Analysis**: `sug_delek_nm`
+- **Time Analysis**: `moed_aliya_lakvish`, `shnat_yitzur`
 
 ### Derived Fields (Calculated in Qlik)
 

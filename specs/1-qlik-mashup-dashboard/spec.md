@@ -3,7 +3,7 @@
 **Feature Branch**: `1-qlik-mashup-dashboard`
 **Created**: 2025-11-06
 **Status**: Draft
-**Input**: User description: "Create a Qlik Sense mashup dashboard to display vehicle registration data from Gov.il portal using hypercubes and custom visualizations based on the visual specification from DASHBOARD-VISUAL-SPEC.md"
+**Input**: User description: "Create a Qlik Sense mashup dashboard to display vehicle registration data from Gov.il portal using hypercubes and custom visualizations. Visual design inspiration from DASHBOARD-VISUAL-SPEC.md. Technology stack: vanilla HTML/CSS/JS with Qlik Sense Capabilities API (no Next.js, React, or frameworks)."
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -85,7 +85,7 @@ Management needs to see registration patterns by year and month to identify seas
 ### Functional Requirements
 
 #### Data Preparation Requirements
-- **FR-001**: System MUST load vehicle registration data daily from the Gov.il portal CSV file (approximately 800MB, 4+ million records)
+- **FR-001**: System MUST load vehicle registration data in Qlik Sense load script from the Gov.il portal CSV file
 - **FR-002**: System MUST standardize brand names (tozeret_nm) by mapping variations to canonical names (e.g., "Toyota Japan" and "Toyota Turkey" → "Toyota")
 - **FR-003**: System MUST standardize commercial names (kinuy_mishari) by mapping model variations to canonical model names
 - **FR-004**: System MUST standardize trim levels (ramat_gimur) to enable Union Motors vs parallel import classification
@@ -173,7 +173,7 @@ Management needs to see registration patterns by year and month to identify seas
 - **SC-009**: Hover interactions display detailed breakdowns within 200 milliseconds of mouse hover
 - **SC-010**: Dashboard maintains visual consistency with the design specification (OKLCH colors, typography scale, spacing system) across all browsers
 - **SC-011**: Daily data updates correctly identify new registrations by comparing previous day's snapshot with current data
-- **SC-012**: Charts handle the full dataset (4+ million records aggregated) without browser memory issues or crashes
+- **SC-012**: Charts handle the full dataset efficiently via Qlik server-side aggregation without browser memory issues or crashes
 
 ### Business Value Metrics
 
@@ -186,10 +186,11 @@ Management needs to see registration patterns by year and month to identify seas
 
 ### Technical Assumptions
 1. The Qlik Sense application is already deployed and accessible with appropriate connection configuration
-2. The Gov.il portal CSV data structure remains consistent with the field definitions provided in the emails
+2. The Gov.il portal CSV/Excel data structure follows the field definitions shown in "table for example.xlsx"
 3. Users have modern web browsers that support the Qlik Capability APIs (Chrome, Firefox, Edge, Safari)
-4. The Qlik Sense server has sufficient resources to handle daily data loads of 800MB+ CSV files
+4. The Qlik Sense load script will process the raw table data and apply all standardization mappings
 5. Hypercube aggregations will be performed server-side in Qlik Sense, not client-side in the browser
+6. Mashup will use vanilla JavaScript ES6 (transpiled to ES5), HTML5, and CSS3 - no React, Next.js, or other frameworks
 
 ### Business Assumptions
 1. The trim level (ramat_gimur) to Union/parallel mapping will be provided by Eran Morlevy and maintained in Qlik Sense
@@ -199,18 +200,20 @@ Management needs to see registration patterns by year and month to identify seas
 5. Users accessing the dashboard have authorized access to competitive market intelligence data
 
 ### Data Assumptions
-1. The moed_aliya_lakvish field will continue to provide year-month only, requiring daily snapshot comparison for precise dates
-2. New vehicle registrations appear in the Gov.il portal dataset within 24 hours of actual registration
-3. The dataset's historical data back to 1996 is accurate but only recent data (2020+) is relevant for analysis
+1. The moed_aliya_lakvish field provides year-month only (YYYY-MM format) as shown in the raw table structure
+2. Data loading happens entirely within the Qlik Sense load script, not via external processes
+3. The raw table structure follows the 42-field format shown in "table for example.xlsx"
 4. The baalut (ownership) field values remain consistent: private, leasing, company, rental, dealer
 5. Fuel type classifications include: gasoline, diesel, electric, hybrid (regular hybrid), plug-in hybrid
+6. Actual data volume and historical range will be determined from the loaded data - no assumptions about specific record counts
 
 ### Design Assumptions
-1. The visual design from DASHBOARD-VISUAL-SPEC.md is the target design system
-2. RTL layout is required for all Hebrew content
-3. Responsive breakpoints follow the specification: sm (640px), md (768px), lg (1024px), xl (1280px)
-4. Dark mode support will be implemented in a future iteration (not included in initial release)
-5. The OKLCH color system provides sufficient contrast for accessibility (no additional WCAG validation needed initially)
+1. DASHBOARD-VISUAL-SPEC.md provides VISUAL INSPIRATION ONLY - not technical stack specifications
+2. Actual implementation uses vanilla HTML/CSS/JS, not Next.js/React as shown in the visual spec
+3. RTL layout is required for all Hebrew content
+4. Responsive breakpoints follow the specification: sm (640px), md (768px), lg (1024px), xl (1280px)
+5. Dark mode support will be implemented in a future iteration (not included in initial release)
+6. The OKLCH color system provides sufficient contrast for accessibility (no additional WCAG validation needed initially)
 
 ## Out of Scope *(mandatory)*
 

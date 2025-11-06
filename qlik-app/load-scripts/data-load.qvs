@@ -1,0 +1,398 @@
+// ============================================================================
+// Gov.il Vehicle Registration Data Load Script
+// ============================================================================
+// Purpose: Load raw vehicle registration data and prepare for mashup dashboard
+// Source: Gov.il Open Data Portal CSV / Excel export
+// Last Updated: 2025-11-06
+// ============================================================================
+
+// ============================================================================
+// SECTION 1: MAPPING TABLES (Brand/Model/Trim Standardization)
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1.1 Brand Master - Standardize manufacturer names
+// ----------------------------------------------------------------------------
+BrandMaster:
+LOAD * INLINE [
+Raw_Brand, Canonical_Brand, Brand_Group, Is_Union_Brand
+"טויוטה יפן", "Toyota", "Toyota Motor Corporation", 1
+"טויוטה טורקיה", "Toyota", "Toyota Motor Corporation", 1
+"טויוטה תאילנד", "Toyota", "Toyota Motor Corporation", 1
+"לקסוס יפן", "Lexus", "Toyota Motor Corporation", 1
+"לקסוס אירופה", "Lexus", "Toyota Motor Corporation", 1
+"הונדה יפן", "Honda", "Honda Motor Co.", 0
+"הונדה תאילנד", "Honda", "Honda Motor Co.", 0
+"מרצדס בנץ גרמניה", "Mercedes-Benz", "Mercedes-Benz Group AG", 0
+"ב מ וו גרמניה", "BMW", "BMW Group", 0
+"קיא דרום קוריאה", "Kia", "Hyundai Motor Group", 0
+"יונדאי דרום קוריאה", "Hyundai", "Hyundai Motor Group", 0
+"מאזדה יפן", "Mazda", "Mazda Motor Corporation", 0
+"ניסאן יפן", "Nissan", "Nissan Motor Corporation", 0
+"סובארו יפן", "Subaru", "Subaru Corporation", 0
+"מיצובישי יפן", "Mitsubishi", "Mitsubishi Motors", 0
+"פולקסווגן גרמניה", "Volkswagen", "Volkswagen Group", 0
+"אאודי גרמניה", "Audi", "Volkswagen Group", 0
+"סקודה צ'כיה", "Škoda", "Volkswagen Group", 0
+"סיאט ספרד", "SEAT", "Volkswagen Group", 0
+"פורד ארה"ב", "Ford", "Ford Motor Company", 0
+"שברולט ארה"ב", "Chevrolet", "General Motors", 0
+"פיג'ו צרפת", "Peugeot", "Stellantis", 0
+"סיטרואן צרפת", "Citroën", "Stellantis", 0
+"רנו צרפת", "Renault", "Renault Group", 0
+"וולוו שבדיה", "Volvo", "Volvo Car Corporation", 0
+"טסלה ארה"ב", "Tesla", "Tesla Inc.", 0
+];
+
+// Create mapping object for brand standardization
+BrandMap:
+Mapping LOAD
+  Raw_Brand,
+  Canonical_Brand
+RESIDENT BrandMaster;
+
+// ----------------------------------------------------------------------------
+// 1.2 Model Master - Standardize commercial model names
+// ----------------------------------------------------------------------------
+ModelMaster:
+LOAD * INLINE [
+Raw_Model, Canonical_Model, Brand, Segment, Body_Type
+"קורולה קרוס 1.8 היברידי", "Corolla Cross", "Toyota", "Compact SUV", "SUV"
+"קורולה קרוס 1.8 HYBRID", "Corolla Cross", "Toyota", "Compact SUV", "SUV"
+"COROLLA CROSS", "Corolla Cross", "Toyota", "Compact SUV", "SUV"
+"ראב 4 2.5 HYBRID", "RAV4", "Toyota", "Mid-Size SUV", "SUV"
+"RAV4 HYBRID", "RAV4", "Toyota", "Mid-Size SUV", "SUV"
+"RAV4", "RAV4", "Toyota", "Mid-Size SUV", "SUV"
+"קמרי 2.5 היברידית", "Camry", "Toyota", "Mid-Size Sedan", "Sedan"
+"CAMRY HYBRID", "Camry", "Toyota", "Mid-Size Sedan", "Sedan"
+"CAMRY", "Camry", "Toyota", "Mid-Size Sedan", "Sedan"
+"יאריס 1.5", "Yaris", "Toyota", "Subcompact", "Hatchback"
+"YARIS", "Yaris", "Toyota", "Subcompact", "Hatchback"
+"פיקנטו", "Picanto", "Kia", "City Car", "Hatchback"
+"PICANTO", "Picanto", "Kia", "City Car", "Hatchback"
+"ספורטאז'", "Sportage", "Kia", "Compact SUV", "SUV"
+"SPORTAGE", "Sportage", "Kia", "Compact SUV", "SUV"
+"סורנטו", "Sorento", "Kia", "Mid-Size SUV", "SUV"
+"SORENTO", "Sorento", "Kia", "Mid-Size SUV", "SUV"
+];
+
+// Create mapping object for model standardization
+ModelMap:
+Mapping LOAD
+  Raw_Model,
+  Canonical_Model
+RESIDENT ModelMaster;
+
+// ----------------------------------------------------------------------------
+// 1.3 Union Trim Mapping - Classify Union Motors vs Parallel Import
+// ----------------------------------------------------------------------------
+// IMPORTANT: This mapping is business-critical and must be maintained by
+// the business user (Eran Morlevy). Add all Union Motors trim levels here.
+// ----------------------------------------------------------------------------
+UnionTrimMapping:
+LOAD * INLINE [
+Trim_Level, Brand, Model, Is_Union
+"C SPORT", "Toyota", "Corolla Cross", 1
+"EXECUTIVE HYBRID", "Toyota", "Corolla Cross", 1
+"XLE Premium", "Toyota", "Camry", 1
+"XLE", "Toyota", "Camry", 1
+"XSE", "Toyota", "Camry", 1
+"Limited", "Toyota", "RAV4", 1
+"XLE Premium", "Toyota", "RAV4", 1
+"ES 300h", "Lexus", "ES", 1
+"ES 300h Premium", "Lexus", "ES", 1
+"RX 450h", "Lexus", "RX", 1
+"RX 450h Luxury", "Lexus", "RX", 1
+"NX 350h", "Lexus", "NX", 1
+];
+
+// Create mapping object for Union classification
+// Key format: Brand|Model|Trim_Level
+UnionTrimMap:
+Mapping LOAD
+  Brand & '|' & Model & '|' & Trim_Level as Trim_Key,
+  Is_Union
+RESIDENT UnionTrimMapping;
+
+// ----------------------------------------------------------------------------
+// 1.4 Ownership Type Standardization
+// ----------------------------------------------------------------------------
+OwnershipTypeMap:
+Mapping LOAD * INLINE [
+Raw_Ownership, Standard_Ownership
+"פרטי", "פרטי"
+"חברה", "חברה"
+"ליסינג", "ליסינג"
+"השכרה", "השכרה"
+"סוחר", "סוחר"
+"מונית", "מונית"
+"אחר", "אחר"
+];
+
+// ----------------------------------------------------------------------------
+// 1.5 Fuel Type Standardization
+// ----------------------------------------------------------------------------
+FuelTypeMap:
+Mapping LOAD * INLINE [
+Raw_Fuel, Standard_Fuel
+"בנזין", "בנזין"
+"דיזל", "דיזל"
+"חשמלי", "חשמלי"
+"היברידי", "היברידי"
+"היברידית", "היברידי"
+"HYBRID", "היברידי"
+"פלאג-אין", "פלאג-אין"
+"PLUG-IN HYBRID", "פלאג-אין"
+"גפ''מ", "גז"
+"גז טבעי", "גז"
+"אתנול", "אתנול"
+];
+
+// ============================================================================
+// SECTION 2: RAW DATA LOAD (From Excel/CSV)
+// ============================================================================
+
+VehicleRegistrations_Raw:
+LOAD
+    // -------------------------------------------------------------------------
+    // Metadata Fields (from API/Database)
+    // -------------------------------------------------------------------------
+    DB_NAME,
+    DB_SOURCE,
+    Timestamp(Date#(RELOAD_TIME, 'DD/MM/YYYY hh:mm:ss')) as RELOAD_TIME,
+
+    // -------------------------------------------------------------------------
+    // Unique Identifiers
+    // -------------------------------------------------------------------------
+    _id,
+    mispar_rechev,                                    // Primary key (license plate)
+    misgeret,                                         // VIN/chassis number
+
+    // -------------------------------------------------------------------------
+    // Vehicle Specifications (Raw Hebrew Fields)
+    // -------------------------------------------------------------------------
+    tozeret_cd,                                       // Manufacturer code
+    sug_degem,                                        // Vehicle type (פרטי/מסחרי)
+    tozeret_nm,                                       // Manufacturer name (RAW - needs mapping)
+    degem_cd,                                         // Model code
+    degem_nm,                                         // Model technical name (Katashiki)
+    ramat_gimur,                                      // Trim level (CRITICAL for Union classification)
+    Num(ramat_eivzur_betihuty) as ramat_eivzur_betihuty,  // Safety equipment level (1-3)
+    Num(kvutzat_zihum) as kvutzat_zihum,             // Pollution/emissions group
+    shnat_yitzur,                                     // Manufacturing year
+    degem_manoa,                                      // Engine model code
+
+    // -------------------------------------------------------------------------
+    // Dates (Convert from text to proper date format)
+    // -------------------------------------------------------------------------
+    Date(Date#(mivchan_acharon_dt, 'YYYY-MM-DD')) as mivchan_acharon_dt,  // Last inspection date
+    Date(Date#(tokef_dt, 'YYYY-MM-DD')) as tokef_dt,                      // Expiry date
+    Date(Date#(moed_aliya_lakvish, 'YYYY-MM')) as moed_aliya_lakvish,    // Registration month (YYYY-MM)
+    Timestamp(Create_Date) as Create_Date,                                 // Record creation timestamp
+
+    // -------------------------------------------------------------------------
+    // Ownership & Features
+    // -------------------------------------------------------------------------
+    baalut,                                           // Ownership type (פרטי/חברה/ליסינג)
+
+    // -------------------------------------------------------------------------
+    // Visual/Physical Attributes
+    // -------------------------------------------------------------------------
+    tzeva_cd,                                         // Color code
+    tzeva_rechev,                                     // Color name (Hebrew)
+    zmig_kidmi,                                       // Front tire size
+    zmig_ahori,                                       // Rear tire size
+
+    // -------------------------------------------------------------------------
+    // Fuel & Propulsion
+    // -------------------------------------------------------------------------
+    sug_delek_nm,                                     // Fuel type (RAW - needs mapping)
+
+    // -------------------------------------------------------------------------
+    // Registration Details
+    // -------------------------------------------------------------------------
+    Num(horaat_rishum) as horaat_rishum,             // Registration instruction code
+    kinuy_mishari,                                    // Commercial model name (RAW - needs mapping)
+
+    // -------------------------------------------------------------------------
+    // API Response Metadata (optional - can be excluded if not needed)
+    // -------------------------------------------------------------------------
+    P_result_include_total,
+    P_result_limit,
+    P_result_records_format,
+    P_result_resource_id,
+    If(P_result_total_estimation_threshold='-', Null(), P_result_total_estimation_threshold) as P_result_total_estimation_threshold,
+    P_result__links_start,
+    P_result__links_next,
+    P_result_total,
+    P_result_total_was_estimated,
+    P_help,
+    P_success,
+    If(__FileName='-', Null(), __FileName) as __FileName,
+    If(P_result_filters_shnat_yitzur='-', Null(), P_result_filters_shnat_yitzur) as P_result_filters_shnat_yitzur,
+    If(Update_Date='-', Null(), Update_Date) as Update_Date
+
+FROM [c:\Users\kevin\OneDrive\מסמכים\Dev-Projects\Gov_Mashup\table for example.xlsx]
+(ooxml, embedded labels, table is Sheet1);
+
+// ============================================================================
+// SECTION 3: DATA TRANSFORMATION & DERIVED FIELDS
+// ============================================================================
+
+VehicleRegistrations:
+LOAD
+    *,
+
+    // -------------------------------------------------------------------------
+    // Brand & Model Standardization
+    // -------------------------------------------------------------------------
+    ApplyMap('BrandMap', tozeret_nm, 'Unknown') as Brand_Canonical,
+    ApplyMap('ModelMap', kinuy_mishari, kinuy_mishari) as Model_Canonical,
+
+    // -------------------------------------------------------------------------
+    // Union Motors Classification (CRITICAL BUSINESS LOGIC)
+    // -------------------------------------------------------------------------
+    // Create composite key: Brand|Model|Trim and lookup in UnionTrimMap
+    // Default to 0 (parallel import) if not found in mapping
+    ApplyMap('UnionTrimMap',
+        ApplyMap('BrandMap', tozeret_nm, 'Unknown') & '|' &
+        ApplyMap('ModelMap', kinuy_mishari, kinuy_mishari) & '|' &
+        ramat_gimur,
+        0) as Union_Flag,
+
+    // -------------------------------------------------------------------------
+    // Ownership & Fuel Standardization
+    // -------------------------------------------------------------------------
+    ApplyMap('OwnershipTypeMap', baalut, baalut) as Ownership_Type_Hebrew,
+    ApplyMap('FuelTypeMap', sug_delek_nm, sug_delek_nm) as Fuel_Type_Hebrew,
+
+    // -------------------------------------------------------------------------
+    // Date Derivations
+    // -------------------------------------------------------------------------
+    // Use moed_aliya_lakvish as registration date (already converted to date format above)
+    Year(moed_aliya_lakvish) as Registration_Year,
+    Month(moed_aliya_lakvish) as Registration_Month_Num,
+    Date(moed_aliya_lakvish, 'YYYY-MM') as Registration_Month,
+
+    // -------------------------------------------------------------------------
+    // Year-Based Flags
+    // -------------------------------------------------------------------------
+    // Current year flag (dynamically calculated based on load date)
+    If(Year(moed_aliya_lakvish) = Year(Today()), 1, 0) as Current_Year_Flag,
+
+    // -------------------------------------------------------------------------
+    // Vehicle Age Calculation
+    // -------------------------------------------------------------------------
+    Year(Today()) - shnat_yitzur as Age_Years,
+
+    // -------------------------------------------------------------------------
+    // Month Name (Hebrew)
+    // -------------------------------------------------------------------------
+    Pick(Month(moed_aliya_lakvish),
+        'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
+        'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
+    ) as Registration_Month_Name_Hebrew
+
+RESIDENT VehicleRegistrations_Raw;
+
+// Clean up temporary table
+DROP TABLE VehicleRegistrations_Raw;
+
+// -------------------------------------------------------------------------
+// Add Parallel Import Flag (inverse of Union_Flag)
+// -------------------------------------------------------------------------
+Left Join (VehicleRegistrations)
+LOAD
+    mispar_rechev,
+    1 - Union_Flag as Parallel_Flag
+RESIDENT VehicleRegistrations;
+
+// ============================================================================
+// SECTION 4: DATA QUALITY VALIDATION
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 4.1 Check for missing license plates (CRITICAL ERROR)
+// ----------------------------------------------------------------------------
+LET vMissingPlates = Num(Count({<mispar_rechev={''}> + <mispar_rechev={null()}>} mispar_rechev), '#,##0');
+IF '$(vMissingPlates)' > 0 THEN
+    TRACE *** ERROR: $(vMissingPlates) records with missing mispar_rechev found! ***;
+    TRACE *** DATA LOAD ABORTED - Fix source data ***;
+    EXIT Script;
+END IF
+
+// ----------------------------------------------------------------------------
+// 4.2 Check for unmapped brands (WARNING)
+// ----------------------------------------------------------------------------
+UnmappedBrands:
+LOAD
+    tozeret_nm as Unmapped_Brand_Name,
+    Count(DISTINCT mispar_rechev) as Vehicle_Count
+RESIDENT VehicleRegistrations
+WHERE Brand_Canonical = 'Unknown'
+GROUP BY tozeret_nm;
+
+LET vUnmappedBrandCount = NoOfRows('UnmappedBrands');
+IF '$(vUnmappedBrandCount)' > 0 THEN
+    TRACE *** WARNING: $(vUnmappedBrandCount) unmapped brand(s) found ***;
+    TRACE *** Review BrandMaster mapping table and add missing brands ***;
+END IF
+
+// ----------------------------------------------------------------------------
+// 4.3 Check Union classification rate (BUSINESS LOGIC VALIDATION)
+// ----------------------------------------------------------------------------
+TempUnionStats:
+LOAD
+    Sum(Union_Flag) as Total_Union,
+    Count(DISTINCT mispar_rechev) as Total_Vehicles
+RESIDENT VehicleRegistrations
+WHERE Current_Year_Flag = 1;
+
+LET vUnionCount = Peek('Total_Union', 0, 'TempUnionStats');
+LET vTotalCount = Peek('Total_Vehicles', 0, 'TempUnionStats');
+LET vUnionPct = Num($(vUnionCount) / $(vTotalCount), '#0.0%');
+
+TRACE === Union Motors Classification Stats (Current Year) ===;
+TRACE Union Vehicles: $(vUnionCount);
+TRACE Total Vehicles: $(vTotalCount);
+TRACE Union Percentage: $(vUnionPct);
+
+IF $(vUnionCount) / $(vTotalCount) < 0.01 OR $(vUnionCount) / $(vTotalCount) > 0.50 THEN
+    TRACE *** WARNING: Union classification rate $(vUnionPct) is outside expected range (1-50%) ***;
+    TRACE *** Review UnionTrimMapping for accuracy ***;
+END IF
+
+DROP TABLE TempUnionStats;
+
+// ============================================================================
+// SECTION 5: PERFORMANCE OPTIMIZATION (Optional)
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 5.1 Create Current Year Optimized View (for fast dashboard loading)
+// ----------------------------------------------------------------------------
+Vehicles_CurrentYear:
+LOAD *
+RESIDENT VehicleRegistrations
+WHERE Current_Year_Flag = 1;
+
+// Store as QVD for rapid access (optional - uncomment if using QVD storage)
+// STORE Vehicles_CurrentYear INTO [lib://DataFiles/Vehicles_CurrentYear.qvd] (qvd);
+
+// ============================================================================
+// SECTION 6: CLEANUP & FINAL TRACES
+// ============================================================================
+
+TRACE ========================================;
+TRACE Data Load Complete!;
+TRACE Total Records Loaded: $(vTotalCount);
+TRACE Union Motors Vehicles: $(vUnionCount) ($(vUnionPct));
+TRACE Unmapped Brands: $(vUnmappedBrandCount);
+TRACE ========================================;
+
+// Drop mapping tables if not needed in final data model
+DROP TABLES BrandMaster, ModelMaster, UnionTrimMapping;
+
+// ============================================================================
+// END OF LOAD SCRIPT
+// ============================================================================

@@ -1,0 +1,151 @@
+================================================================================
+EXCEL FILE FIELD ANALYSIS FOR QLIK SENSE LOAD SCRIPT
+================================================================================
+
+File: table for example.xlsx
+Total Rows: 226 (excluding header)
+Total Columns: 42
+
+================================================================================
+FIELD SUMMARY TABLE
+================================================================================
+
+NO  FIELD NAME                          DATA TYPE           QLIK TYPE        NOTES
+--- ----------------------------------- ------------------- ---------------- --------------------
+1   DB_NAME                             Text                Text/General     Constant: "DWH"
+2   DB_SOURCE                           Text                Text/General     Database server name
+3   RELOAD_TIME                         DateTime String     Date/Timestamp   Format: DD/MM/YYYY HH:MM:SS
+4   _id                                 Number              Numeric          Unique identifier
+5   mispar_rechev                       Number              Numeric          8-digit vehicle number
+6   baalut                              Text (Hebrew)       Text/General     Ownership type
+7   P_result_include_total              Number              Numeric          Boolean flag (0/1)
+8   P_result_limit                      Number              Numeric          Constant: 700000
+9   P_result_records_format             Text                Text/General     Constant: "objects"
+10  P_result_resource_id                Text                Text/General     GUID format
+11  P_result_total_estimation_threshold Text                Text/General     Value: "-"
+12  P_result__links_start               Text                Text/General     API URL
+13  P_result__links_next                Text                Text/General     API URL
+14  P_result_total                      Number              Numeric          Count value
+15  P_result_total_was_estimated        Number              Numeric          Boolean flag (0/1)
+16  P_help                              Text                Text/General     Help URL
+17  P_success                           Number              Numeric          Boolean flag (0/1)
+18  __FileName                          Text                Text/General     Value: "-"
+19  P_result_filters_shnat_yitzur       Text                Text/General     Value: "-"
+20  tozeret_cd                          Number              Numeric          Manufacturer code
+21  sug_degem                           Text                Text/General     Model type (P/M)
+22  tozeret_nm                          Text (Hebrew)       Text/General     Manufacturer name
+23  degem_cd                            Number              Numeric          Model code
+24  degem_nm                            Text                Text/General     Model name
+25  ramat_gimur                         Text                Text/General     Trim level
+26  ramat_eivzur_betihuty               Text (Numeric)      Numeric          Safety rating (1-3)
+27  kvutzat_zihum                       Text (Numeric)      Numeric          Pollution group
+28  shnat_yitzur                        Number              Numeric          Year (4-digit)
+29  degem_manoa                         Text                Text/General     Engine model
+30  mivchan_acharon_dt                  Text                Text/General     Date: YYYY-MM-DD
+31  tokef_dt                            Text                Text/General     Date: YYYY-MM-DD
+32  misgeret                            Text                Text/General     VIN/Chassis number
+33  tzeva_cd                            Number              Numeric          Color code
+34  tzeva_rechev                        Text (Hebrew)       Text/General     Color name
+35  zmig_kidmi                          Text                Text/General     Front tire size
+36  zmig_ahori                          Text                Text/General     Rear tire size
+37  sug_delek_nm                        Text (Hebrew)       Text/General     Fuel type
+38  horaat_rishum                       Text (Numeric)      Numeric          Registration instruction
+39  moed_aliya_lakvish                  Text                Text/General     Format: YYYY-MM
+40  kinuy_mishari                       Text                Text/General     Commercial name
+41  Create_Date                         DateTime            Date/Timestamp   Full timestamp
+42  Update_Date                         Text                Text/General     Value: "-"
+
+================================================================================
+KEY INSIGHTS FOR QLIK SENSE LOAD SCRIPT
+================================================================================
+
+DATE FIELDS (3 formats identified):
+  - RELOAD_TIME: DD/MM/YYYY HH:MM:SS format (text)
+  - mivchan_acharon_dt, tokef_dt: YYYY-MM-DD format (text)
+  - moed_aliya_lakvish: YYYY-MM format (text)
+  - Create_Date: Native DateTime object
+
+NUMERIC FIELDS STORED AS TEXT:
+  - ramat_eivzur_betihuty (1-3)
+  - kvutzat_zihum (3-15)
+  - horaat_rishum (6-digit numbers)
+
+HEBREW TEXT FIELDS:
+  - baalut (ownership type)
+  - tozeret_nm (manufacturer name)
+  - tzeva_rechev (color name)
+  - sug_delek_nm (fuel type)
+
+CONSTANT/METADATA FIELDS:
+  - DB_NAME: Always "DWH"
+  - DB_SOURCE: Database server identifier
+  - P_result_limit: Always 700000
+  - P_result_records_format: Always "objects"
+  - Multiple fields with "-" as value
+
+UNIQUE IDENTIFIERS:
+  - _id: Numeric ID
+  - mispar_rechev: 8-digit vehicle registration number
+  - misgeret: VIN/chassis number
+
+RECOMMENDED QLIK SENSE TRANSFORMATIONS:
+1. Convert RELOAD_TIME using Date#() with format 'DD/MM/YYYY hh:mm:ss'
+2. Convert mivchan_acharon_dt, tokef_dt using Date#() with format 'YYYY-MM-DD'
+3. Convert moed_aliya_lakvish using Date#() with format 'YYYY-MM'
+4. Convert Create_Date using Timestamp() function
+5. Convert ramat_eivzur_betihuty, kvutzat_zihum, horaat_rishum to Num()
+6. Consider filtering out constant fields (DB_NAME, P_result_limit, etc.)
+7. Handle "-" values as null/empty
+
+================================================================================
+SAMPLE QLIK SENSE LOAD SCRIPT SNIPPET
+================================================================================
+
+LOAD
+    DB_NAME,
+    DB_SOURCE,
+    Timestamp(Date#(RELOAD_TIME, 'DD/MM/YYYY hh:mm:ss')) as RELOAD_TIME,
+    _id,
+    mispar_rechev,
+    baalut,
+    P_result_include_total,
+    P_result_limit,
+    P_result_records_format,
+    P_result_resource_id,
+    If(P_result_total_estimation_threshold='-', Null(), P_result_total_estimation_threshold) as P_result_total_estimation_threshold,
+    P_result__links_start,
+    P_result__links_next,
+    P_result_total,
+    P_result_total_was_estimated,
+    P_help,
+    P_success,
+    If(__FileName='-', Null(), __FileName) as __FileName,
+    If(P_result_filters_shnat_yitzur='-', Null(), P_result_filters_shnat_yitzur) as P_result_filters_shnat_yitzur,
+    tozeret_cd,
+    sug_degem,
+    tozeret_nm,
+    degem_cd,
+    degem_nm,
+    ramat_gimur,
+    Num(ramat_eivzur_betihuty) as ramat_eivzur_betihuty,
+    Num(kvutzat_zihum) as kvutzat_zihum,
+    shnat_yitzur,
+    degem_manoa,
+    Date(Date#(mivchan_acharon_dt, 'YYYY-MM-DD')) as mivchan_acharon_dt,
+    Date(Date#(tokef_dt, 'YYYY-MM-DD')) as tokef_dt,
+    misgeret,
+    tzeva_cd,
+    tzeva_rechev,
+    zmig_kidmi,
+    zmig_ahori,
+    sug_delek_nm,
+    Num(horaat_rishum) as horaat_rishum,
+    Date(Date#(moed_aliya_lakvish, 'YYYY-MM')) as moed_aliya_lakvish,
+    kinuy_mishari,
+    Timestamp(Create_Date) as Create_Date,
+    If(Update_Date='-', Null(), Update_Date) as Update_Date
+FROM
+    [c:\Users\kevin\OneDrive\מסמכים\Dev-Projects\Gov_Mashup\table for example.xlsx]
+    (ooxml, embedded labels, table is Sheet1);
+
+================================================================================
